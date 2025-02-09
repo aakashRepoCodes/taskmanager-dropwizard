@@ -1,7 +1,7 @@
-package com.task.service;
+package com.task.core;
 
-import com.task.core.Task;
 import com.task.api.request.TaskDTO;
+import com.task.core.model.Task;
 import com.task.db.TaskRepository;
 import jakarta.inject.Inject;
 
@@ -40,3 +40,4 @@ public class TaskService {
         return taskRepository.findById(taskId).orElseThrow( () -> new RuntimeException("Task could not be created"));
     }
 }
+

@@ -1,4 +1,4 @@
-package com.task.core;
+package com.task.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

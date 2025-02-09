@@ -1,9 +1,9 @@
-package com.task.resources;
+package com.task.resource;
 
 
-import com.task.core.Task;
+import com.task.core.TaskService;
+import com.task.core.model.Task;
 import com.task.api.request.TaskDTO;
-import com.task.service.TaskService;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

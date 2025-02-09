@@ -1,9 +1,11 @@
 package com.task;
 
-import com.task.core.Task;
+import com.task.core.TaskService;
+import com.task.db.AuthRepository;
+import com.task.resource.AuthResource;
+import com.task.resource.TaskResource;
+import com.task.core.model.Task;
 import com.task.db.TaskRepository;
-import com.task.resources.TaskResource;
-import com.task.service.TaskService;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
@@ -42,6 +44,9 @@ public class TaskWizardApplication extends Application<trueConfiguration> {
         // Register TaskDao
         TaskRepository taskRepository = jdbi.onDemand(TaskRepository.class);
         TaskService taskService = new TaskService(taskRepository);
+        AuthRepository authRepository =  jdbi.onDemand(AuthRepository.class);
+        AuthResource authResource = new AuthResource(authRepository);
+        environment.jersey().register(authResource);
         environment.jersey().register(new TaskResource(taskService));
     }
 
