@@ -2,6 +2,8 @@ package com.task;
 
 import com.task.core.TaskService;
 import com.task.db.AuthRepository;
+import com.task.exceptions.UserNotFoundException;
+import com.task.exceptions.handler.UserNotFoundHandler;
 import com.task.resource.AuthResource;
 import com.task.resource.TaskResource;
 import com.task.core.model.Task;
@@ -48,6 +50,9 @@ public class TaskWizardApplication extends Application<trueConfiguration> {
         AuthResource authResource = new AuthResource(authRepository);
         environment.jersey().register(authResource);
         environment.jersey().register(new TaskResource(taskService));
+
+        environment.jersey().register(new UserNotFoundHandler());
+
     }
 
 }
