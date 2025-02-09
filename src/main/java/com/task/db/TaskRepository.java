@@ -1,35 +1,33 @@
 package com.task.db;
 
-import com.mysql.cj.xdevapi.AbstractDataResult;
 import com.task.core.Task;
-import io.dropwizard.hibernate.AbstractDAO;
-import jakarta.inject.Inject;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.List;
 import java.util.Optional;
 
-public class TaskRepository extends AbstractDAO<Task> {
+@RegisterBeanMapper(Task.class) // Ensures JDBI maps result sets to Task objects
+public interface TaskRepository {
 
-    @Inject
-    public TaskRepository(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+    @SqlQuery("SELECT * FROM tasks")
+    List<Task> findAll();
 
-    public List<Task> findAll() {
-        return list((Query<Task>) namedQuery("Task.findAll"));
-    }
+    @SqlQuery("SELECT * FROM tasks WHERE id = :id")
+    Optional<Task> findById(@Bind("id") Long id);
 
-    public Optional<Task> findById(Long id) {
-        return Optional.ofNullable(get(id));
-    }
+    @SqlUpdate("INSERT INTO tasks (title, description) VALUES (:title, :description)")
+    @GetGeneratedKeys
+    Long insert(@BindBean Task task);
 
-    public Task save(Task task) {
-        return persist(task);
-    }
+    @SqlUpdate("UPDATE tasks SET title = :title, description = :description WHERE id = :id")
+    void update(@BindBean Task task);
 
-    public void delete(Task task) {
-        currentSession().delete(task);
-    }
+    @SqlUpdate("DELETE FROM tasks WHERE id = :id")
+    void delete(@Bind("id") Long id);
+
 }

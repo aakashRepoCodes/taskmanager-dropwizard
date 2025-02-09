@@ -13,4 +13,6 @@ public class TaskDTO {
 
     private String description;
 
+    private String due_date;
+
 }

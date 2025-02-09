@@ -45,11 +45,25 @@
             <version>4.0.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-migrations</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+
+        <!-- handling migrations -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.22.3</version>
+        </dependency>
+
+
         <!-- Dropwizard JDBI3 Integration -->
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-jdbi3</artifactId>
-            <version>${dropwizard.version}</version>
+            <version>4.0.6</version>
         </dependency>
 
         <!-- JDBI Core (Required for executing SQL) -->
@@ -66,21 +80,6 @@
             <version>3.41.1</version>
         </dependency>
 
-        <!-- JDBI MySQL Plugin (Required for MySQL compatibility) -->
-        <dependency>
-            <groupId>org.jdbi</groupId>
-            <artifactId>jdbi3-mysql</artifactId>
-            <version>3.41.1</version>
-        </dependency>
-
-        <!-- MySQL JDBC Driver (Required to connect to MySQL) -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -91,6 +90,7 @@
             <artifactId>javax.persistence-api</artifactId>
             <version>2.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -118,6 +118,19 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>9.22.3</version>
+                    <configuration>
+                        <url>jdbc:mysql://localhost:3314/task_wizard_db</url>
+                        <user>task_wizard_user</user>
+                        <password>task_wizard_password</password>
+                        <schemas>task_wizard_db</schemas>
+                        <locations>filesystem:src/main/resources/db/migrations</locations>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>

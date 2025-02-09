@@ -5,6 +5,7 @@ import io.dropwizard.core.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.flywaydb.core.Flyway;
 
 public class trueConfiguration extends Configuration {
 
@@ -12,8 +13,9 @@ public class trueConfiguration extends Configuration {
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
 
+
     @JsonProperty("database")
-    public DataSourceFactory getDatabase() {
+    public DataSourceFactory getDataSourceFactory() {
         return database;
     }
 
@@ -22,4 +24,12 @@ public class trueConfiguration extends Configuration {
         this.database = database;
     }
 
+    public void runFlywayMigrations() {
+        Flyway flyway = Flyway.configure()
+                .dataSource(database.getUrl(), database.getUser(), database.getPassword())
+                .locations("classpath:db/migration")
+                .baselineOnMigrate(true)
+                .load();
+        flyway.migrate();
+    }
 }

@@ -4,24 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import org.hibernate.annotations.Entity;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @Table(name = "tasks")  // Explicit table mapping (recommended)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@NamedQueries({
-        @NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t")
-})
 public class Task {
 
     @Id

@@ -26,3 +26,4 @@ database:
     hibernate.generate_statistics: true
 
 
+

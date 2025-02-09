@@ -12,6 +12,7 @@ services:
       MYSQL_PASSWORD: task_wizard_password        # Password for the user
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d  # Mount init scripts
       - ./logs:/logs
 
   adminer:
