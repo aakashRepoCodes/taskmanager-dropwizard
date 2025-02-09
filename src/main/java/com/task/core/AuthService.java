@@ -6,6 +6,7 @@ import com.task.core.model.Role;
 import com.task.core.model.User;
 import com.task.db.AuthRepository;
 import com.task.exceptions.UserNotFoundException;
+import jakarta.annotation.security.RolesAllowed;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class AuthService {
@@ -15,7 +16,6 @@ public class AuthService {
     public AuthService(AuthRepository authRepository) {
         this.authRepository = authRepository;
     }
-
 
     public void createUser(UserDTO userDTO) {
         User user = new User();

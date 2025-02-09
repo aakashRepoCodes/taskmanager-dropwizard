@@ -1,6 +1,7 @@
 package com.task.resource;
 
 import com.task.api.request.UserDTO;
+import com.task.api.response.ApiResponse;
 import com.task.auth.UserPrincipal;
 import com.task.core.AuthService;
 import com.task.core.model.User;
@@ -23,16 +24,17 @@ public class AuthResource {
         this.authService = new AuthService(authRepository);
     }
 
-    @Path("/register")
     @POST
-    public void registerUser(UserDTO userDTO) {
+    @Path("/register")
+    public Response registerUser(UserDTO userDTO) {
         authService.createUser(userDTO);
+        return Response.ok(ApiResponse.success("User registered successfully", userDTO.getEmail())).build();
     }
 
-    @Path("/login")
     @POST
+    @Path("/login")
     public Response loginUser(UserDTO userDTO) {
         UserPrincipal user = authService.login(userDTO);
-        return Response.status(Response.Status.OK).entity(user).build();
+        return Response.ok(ApiResponse.success("Login successful", user)).build();
     }
 }

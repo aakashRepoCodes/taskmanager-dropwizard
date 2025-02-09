@@ -5,6 +5,7 @@ import com.task.core.TaskService;
 import com.task.core.model.Task;
 import com.task.api.request.TaskDTO;
 import io.dropwizard.hibernate.UnitOfWork;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -27,6 +28,7 @@ public class TaskResource {
         return taskService.getAllTasks();
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @UnitOfWork
     public Response addNewTask(TaskDTO taskDTO) {
