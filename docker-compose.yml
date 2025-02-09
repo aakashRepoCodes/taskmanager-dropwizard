@@ -1,0 +1,25 @@
+version: '4'
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql_task_manager
+    ports:
+      - "3314:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword     # Root password
+      MYSQL_DATABASE: task_wizard_db     # Database to create
+      MYSQL_USER: task_wizard_user                # Non-root user to create
+      MYSQL_PASSWORD: task_wizard_password        # Password for the user
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./logs:/logs
+
+  adminer:
+    image: adminer
+    container_name: adminer_task_wizard_dashboard
+    restart: always
+    ports:
+      - "8089:8080"
+
+
+

@@ -1,18 +1,27 @@
 package com.task.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @Table(name = "tasks")  // Explicit table mapping (recommended)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@NamedQueries({
+        @NamedQuery(name = "Task.findAll", query = "SELECT t FROM Task t")
+})
 public class Task {
 
     @Id
@@ -24,17 +33,17 @@ public class Task {
 
     private String description;
 
-    @Column(name = "due_date")
+  /*  @Column(name = "due_date")
     private LocalDateTime dueDate;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status;*/
 
-    @ManyToOne(fetch = FetchType.LAZY)  // Use LAZY fetching for better performance
+  /*  @ManyToOne(fetch = FetchType.LAZY)  // Use LAZY fetching for better performance
     @JoinColumn(name = "user_id")       // Foreign key mapping
     @JsonIgnore
-    private User user;
+    private User user;*/
 }
